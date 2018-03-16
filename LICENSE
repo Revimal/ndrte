@@ -1,0 +1,23 @@
+List of ndr-pmap-mod licenses
+
+Descriptions of section entries:
+
+	L: Applied license <License File>
+	F: Files and directories with wildcard patterns.
+		A trailing slash includes all files and subdirectory files.
+		F:	arch/x86/     all files in and below arch/x86
+		F:	arch/x86/*    all files in arch/x86, but not below
+		F:	*/arch/*      all files in "any top level directory"/arch
+		One pattern per line.  Multiple F: lines acceptable.
+	X: Files and directories exclusion, same rules as F:
+	K: Keyword regex pattern to match content.
+		One regex pattern per line. Multiple K: lines acceptable.
+
+== General ==
+L:	MIT <LICENSE-MIT>
+F:  /
+X:	drivers/
+
+== Linux Driver Commons ==
+L:	GPL-3.0 <LICENSE-GPL>
+F:	drivers/
