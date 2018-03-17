@@ -30,28 +30,45 @@ Project Administration
 M:  Hyeonho Seo <seohho@gmail.com>
 C:  general
 S:  Maintained
-F:  .gitignore
-F:  README.md
-F:  LICENSE
-F:  MAINTAINERS
+F:  *
+
+Self-test Administration
+M:  Hyeonho Seo <seohho@gmail.com>
+C:  test
+S:  Maintained
+F:	selftest/
+
+== Compiler Support ==
+Compiler Support Commons
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	comp
+S:	Broken
+F:	compdeps/*
+X:	compdeps/gcc/
+
+gcc Support
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	comp/gcc
+S:	Maintained
+F:	compdeps/gcc/
 
 == Archtecture Support ==
 Archtecture Support Commons
 M:	Hyeonho Seo <seohho@gmail.com>
-C:	archdeps
+C:	arch
 S:	Broken
 F:	archdeps/*
 X:	archdeps/x86_64/
 
 x86 Support
 M:	Hyeonho Seo <seohho@gmail.com>
-C:	archdeps/x86
+C:	arch/x86
 S:	Maintained
 F:	archdeps/x86/
 
 == Linux Driver Commons ==
 M:	Hyeonho Seo <seohho@gmail.com>
-C:	driver
+C:	drv
 S:	Maintained
 F:	drivers/*
 X:	drivers/pktmap/
@@ -59,13 +76,27 @@ X:	drivers/pktmap/
 == Linux Pktmap Driver ==
 Linux Pktmap Driver Commons
 M:	Hyeonho Seo <seohho@gmail.com>
-C:	pktmap
+C:	pmap
 S:	Maintained
 F:	drivers/pktmap/*
 X:	drivers/pktmap/ndr-gpm1
 
 NDR-GPM1 Pktmap Driver
 M:	Hyeonho Seo <seohho@gmail.com>
-C:	pktmap/ndr-gpm1
+C:	pmap/ndr-gpm1
 S:	Maintained
 F:	drivers/ndr-gpm1/
+
+== Data Structure ==
+Data Structure Commons
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	dst
+S:	Broken
+F:	datastruct/*
+X:	datastruct/lockfree/
+
+Lockfree Structure
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	dst/lf
+S:	Maintained
+F:	datastruct/lockfree/

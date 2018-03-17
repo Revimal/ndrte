@@ -26,7 +26,7 @@ static int ngpm1_iphook_callback( NGPM1_SKBHOOK_ARGS )
 	if ( skb )
 	{
 		struct iphdr *iph = ip_hdr( skb );
-		PDRV_LOG( "{"NIPQUAD_FMT"}=>{"NIPQUAD_FMT"} : %s\n",
+		DRV_LOG( "{"NIPQUAD_FMT"}=>{"NIPQUAD_FMT"} : %s\n",
 					NIPQUAD( iph->saddr ),
 					NIPQUAD( iph->daddr ),
 					iph->protocol == IPPROTO_ICMP ? "ICMP" : "UNKNOWN"

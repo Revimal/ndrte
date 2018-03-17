@@ -1,4 +1,4 @@
-HDRS += pdrv_common.h
+HDRS += drv_common.h
 
 include $(NBE_DIR)/ndr.obj.mk
 

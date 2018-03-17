@@ -21,7 +21,7 @@ struct ngpm1_shdesc_struct
 typedef struct ngpm1_shdesc_struct * ngpm1_shdesc_t;
 
 static LIST_HEAD( shdesc_list );
-static DEFINE_RWLOCK( shdesc_list_lock );
+static DEFINE_SPINLOCK( shdesc_list_lock );
 
 static int ngpm1_skbhook_dummyrcv( NGPM1_SKBHOOK_ARGS )
 {
@@ -69,14 +69,14 @@ int ngpm1_skbhook_attach( uint16_t type, int (*ptr_hook_func)( NGPM1_SKBHOOK_ARG
 
 	if ( !!ngpm1_shdesc_lookup( type ) )
 	{
-		PDRV_WARN( "Requested skbhook already exist\n" );
+		DRV_WARN( "Requested skbhook already exist\n" );
 		goto hook_out;
 	}
 
 	shdesc = kzalloc( sizeof( struct ngpm1_shdesc_struct ), GFP_ATOMIC );
 	if ( !shdesc )
 	{
-		PDRV_ERR( "Failed to allocate skbhook descriptor \n" );
+		DRV_ERR( "Failed to allocate skbhook descriptor \n" );
 		goto hook_out;
 	}
 
@@ -116,7 +116,7 @@ int ngpm1_skbhook_detach( uint16_t type )
 	shdesc = ngpm1_shdesc_lookup( type );
 	if ( !shdesc )
 	{
-		PDRV_WARN( "Requested skbhook not exist\n" );
+		DRV_WARN( "Requested skbhook not exist\n" );
 		goto unhook_out;
 	}
 

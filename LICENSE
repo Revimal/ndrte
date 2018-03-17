@@ -15,7 +15,7 @@ Descriptions of section entries:
 
 == General ==
 L:	MIT <LICENSE-MIT>
-F:  /
+F:	/
 X:	drivers/
 
 == Linux Driver Commons ==
