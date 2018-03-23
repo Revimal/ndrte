@@ -34,7 +34,7 @@ static int ngpm1_iphook_callback( NGPM1_SKBHOOK_ARGS )
 	}
 
 	kfree_skb( skb );
-	return NET_RX_SUCCESS;
+	return NET_RX_DROP;
 }
 
 static int __init ngpm1_load( void )

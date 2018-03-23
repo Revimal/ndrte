@@ -17,7 +17,7 @@ struct ndrte_generic_lfq_ ## lfq_alias \
 #define NDRTE_LFQ( lfq_alias ) \
    struct ndrte_generic_lfq_ ## lfq_alias
 
-#define NDRTE_LFQ_INIT( lfq_alias, lfq_size, lfq ) \
+#define NDRTE_LFQ_INIT( lfq, lfq_size ) \
 do \
 { \
     memset( (lfq), 0, sizeof(*(lfq)) ); \

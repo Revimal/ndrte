@@ -1,4 +1,4 @@
-List of ndr-pmap-mod licenses
+List of ndrte licenses
 
 Descriptions of section entries:
 
@@ -14,10 +14,12 @@ Descriptions of section entries:
 		One regex pattern per line. Multiple K: lines acceptable.
 
 == General ==
-L:	MIT <LICENSE-MIT>
+L:	MPL-1.1 <LICENSE-MPL>
 F:	/
 X:	drivers/
 
 == Linux Driver Commons ==
 L:	GPL-3.0 <LICENSE-GPL>
 F:	drivers/
+
+License
