@@ -1,4 +1,4 @@
-APP = ndrte_selftest
+APP = selftest
 
 EXTRA_CFLAGS += -g
 
