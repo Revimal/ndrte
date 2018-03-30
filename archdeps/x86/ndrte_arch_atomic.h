@@ -56,7 +56,7 @@ typedef atomic_t ndrte_atomic32_t;
 #define ndrte_atomic32_dec( atomic_val ) \
 	atomic_dec( atomic_val )
 
-#define ndrte_atomic32_cxchg( atomic_val, old_val, new_val ) \
+#define ndrte_atomic32_xchg( atomic_val, old_val, new_val ) \
 	atomic_xchg( atomic_val, old_val, new_val )
 
 #define ndrte_atomic32_cmpxchg( atomic_val, old_val, new_val ) \
@@ -113,7 +113,7 @@ static NDRTE_STRONG_INLINE uint64_t ndrte_atomic64_xchg( ndrte_atomic64_t *atomi
 	__asm__ __volatile__ ( NDRTE_LOCK_PREFIX "xchgq %0, %1"
 							: "+a" (ret), "+m" (*ptr)
 							: : "memory" );
-	
+
 	return ret;
 }
 
@@ -178,7 +178,7 @@ static NDRTE_STRONG_INLINE uint32_t ndrte_atomic32_xchg( ndrte_atomic32_t *atomi
 	__asm__ __volatile__ ( NDRTE_LOCK_PREFIX "xchgl %0, %1"
 							: "+a" (ret), "+m" (*ptr)
 							: : "memory" );
-	
+
 	return ret;
 }
 

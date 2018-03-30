@@ -21,6 +21,6 @@ NTS_DECLARE_TC( lfqueue_sp_deq )
 	for ( i = 0; i < 1000; i++ )
     {
         ndrte_lfq_deq( &lfq, tmp );
-		__NTS_ASSERT( lfqueue_sp_deq, i + 1 == (uint64_t)tmp, __NTS_LVLNONE );
+		NTS_CHECK_LVL( lfqueue_sp_deq, i + 1 == (uint64_t)tmp, NTS_LVLSILENT );
     }
 }
