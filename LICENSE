@@ -2,7 +2,7 @@ List of ndrte licenses
 
 Descriptions of section entries:
 
-	L: Applied license <License File>
+	L: License <License File>
 	F: Files and directories with wildcard patterns.
 		A trailing slash includes all files and subdirectory files.
 		F:	arch/x86/     all files in and below arch/x86
