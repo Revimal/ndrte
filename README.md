@@ -3,7 +3,7 @@
 <img src="https://avatars3.githubusercontent.com/u/19686401" align="center" />
 
 'ndrte' is a light-weight parallel computing framework, that is focusing on fast packet processing.
-It designed to provide the network developer an easy, efficient, flexible way to create programs which need to send, receive and manipulate network packets.
+It is designed to provide network developers an easy, efficient, and flexible way to create software products which need to send, receive and manipulate network packets.
 It runs mostly in linux userland; process task scheduling and memory mapping autonomously to achieve the best performance and low-latency.
 
 *It's inspired by [Intel® Data Plane Development Kit](http://dpdk.org/)*
