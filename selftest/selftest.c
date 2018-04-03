@@ -8,5 +8,5 @@ int main( int argc, char **argv )
 	NTS_CALL_TC( lfqueue_sp_sc );
 	NTS_REPORT( lfqueue_sp_sc );
 
-    return 0;
+	return 0;
 }

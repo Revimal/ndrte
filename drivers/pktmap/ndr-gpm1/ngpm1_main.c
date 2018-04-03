@@ -39,18 +39,18 @@ static int ngpm1_iphook_callback( NGPM1_SKBHOOK_ARGS )
 
 static int __init ngpm1_load( void )
 {
-    int ret = 0;
+	int ret = 0;
 
 	ngpm1_skbhook_attach( cpu_to_be16(ETH_P_IP), ngpm1_iphook_callback );
 
-    return ret;
+	return ret;
 }
 
 static void __exit ngpm1_unload( void )
 {
 	ngpm1_skbhook_detach( cpu_to_be16(ETH_P_IP) );
 
-    return;
+	return;
 }
 
 module_init(ngpm1_load);
