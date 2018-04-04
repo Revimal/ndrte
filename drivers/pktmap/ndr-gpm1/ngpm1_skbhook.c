@@ -25,7 +25,7 @@ static DEFINE_SPINLOCK( shdesc_list_lock );
 
 static int ngpm1_skbhook_dummyrcv( NGPM1_SKBHOOK_ARGS )
 {
-    return NET_RX_DROP;
+	return NET_RX_DROP;
 }
 
 static inline ngpm1_shdesc_t ngpm1_shdesc_lookup( uint16_t type )

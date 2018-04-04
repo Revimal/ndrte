@@ -3,6 +3,7 @@ APP = selftest
 SUBCOMP += test
 
 DEPLIBS += pthread
+EXTOBJS += dst_lockfree
 
 SRCS += selftest_lfqueue.c
 SRCS += selftest.c
