@@ -32,11 +32,11 @@ C:  general
 S:  Maintained
 F:  *
 
-Self-test Administration
+Test Administration
 M:  Hyeonho Seo <seohho@gmail.com>
 C:  test
 S:  Maintained
-F:	selftest/
+F:	test/
 
 == Compiler Support ==
 Compiler Support Commons
@@ -94,6 +94,12 @@ C:	dst
 S:	Broken
 F:	datastruct/*
 X:	datastruct/lockfree/
+
+Normal Structure
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	dst/single
+S:	Maintained
+F:	datastruct/single/
 
 Lockfree Structure
 M:	Hyeonho Seo <seohho@gmail.com>

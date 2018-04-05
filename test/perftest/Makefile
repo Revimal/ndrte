@@ -1,12 +1,14 @@
-APP = selftest
+APP = perftest
 
 SUBCOMP += test
 
 DEPLIBS += pthread
+
+EXTOBJS += dst_single
 EXTOBJS += dst_lockfree
 
-SRCS += selftest_lfqueue.c
-SRCS += selftest.c
+SRCS += perftest_queue.c
+SRCS += perftest.c
 
 include $(NBE_DIR)/ndr.subcomp.mk
 include $(NBE_DIR)/ndr.debug.mk

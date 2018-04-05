@@ -4,7 +4,7 @@
 #define NDRTE_LOCK_PREFIX "\n\tlock; "
 #define NDRTE_ARCH_CACHELINE 64
 
-static inline void ndrte_pause(void)
+static inline void ndrte_pause( void )
 {
 	;
 }

@@ -1,7 +1,12 @@
 #include "selftest.h"
 
+#include "ndrte_arch_endian.h"
+
 int main( int argc, char **argv )
 {
+	NTS_CALL_TC( queue_single );
+	NTS_REPORT( queue_single );
+
 	NTS_CALL_TC( lfqueue_single );
 	NTS_REPORT( lfqueue_single );
 

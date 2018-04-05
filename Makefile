@@ -5,6 +5,6 @@ RDIRS += archdeps
 RDIRS += datastruct
 RDIRS += drivers
 
-RDIRS += selftest
+RDIRS += test
 
 include $(CURDIR)/ndr-build-env/ndr.mkroot.mk

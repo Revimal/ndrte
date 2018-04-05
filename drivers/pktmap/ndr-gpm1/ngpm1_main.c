@@ -59,4 +59,4 @@ module_exit(ngpm1_unload);
 MODULE_VERSION("1.0.0");
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("openndr");
-MODULE_DESCRIPTION("Linux skb user-mapping driver for generic NICs");
+MODULE_DESCRIPTION("Linux skbuff user-mapping driver for generic NICs");

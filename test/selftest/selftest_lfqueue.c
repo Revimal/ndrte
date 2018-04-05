@@ -1,5 +1,6 @@
-#include "selftest_lfqueue.h"
 #include "ndrte_lfqueue.h"
+
+#include "selftest_lfqueue.h"
 
 #define LFQ_TEST_SIZE 10000000
 #define LFQ_TEST_MPNUM 10
