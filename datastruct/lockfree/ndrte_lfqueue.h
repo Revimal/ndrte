@@ -22,8 +22,8 @@ int ndrte_lfq_init( struct ndrte_lfq *lfq, NDRTE_UNUSED const char *name, uint64
 uint64_t ndrte_lfq_free_count( struct ndrte_lfq *lfq );
 uint64_t ndrte_lfq_fill_count( struct ndrte_lfq *lfq );
 
-uint64_t ndrte_lfq_enq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, int mode );
-uint64_t ndrte_lfq_deq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, int mode );
+uint64_t ndrte_lfq_enq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, ndrte_dst_mode_t mode );
+uint64_t ndrte_lfq_deq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, ndrte_dst_mode_t mode );
 
 static NDRTE_STRONG_INLINE uint64_t ndrte_lfq_get_sz( struct ndrte_lfq *lfq )
 {

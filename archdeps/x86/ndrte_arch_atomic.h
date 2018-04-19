@@ -1,8 +1,6 @@
 #ifndef NDRTE_ARCH_ATOMIC_H
 #define NDRTE_ARCH_ATOMIC_H
 
-#include <stdint.h>
-
 #include "ndrte_compiler_common.h"
 #include "ndrte_arch_common.h"
 
@@ -76,7 +74,7 @@ static NDRTE_STRONG_INLINE uint64_t ndrte_atomic64_get( ndrte_atomic64_t *atomic
 
 static NDRTE_STRONG_INLINE void ndrte_atomic64_set( ndrte_atomic64_t *atomic_val, uint64_t mov_val )
 {
-	NDRTE_ACCESS_ONCE( atomic_val->cnt ) = NDRTE_ACCESS_ONCE( mov_val );
+	atomic_val->cnt = mov_val;
 }
 
 static NDRTE_STRONG_INLINE void ndrte_atomic64_add( ndrte_atomic64_t *atomic_val, uint64_t add_val )
@@ -108,10 +106,9 @@ static NDRTE_STRONG_INLINE void ndrte_atomic64_dec( ndrte_atomic64_t *atomic_val
 static NDRTE_STRONG_INLINE uint64_t ndrte_atomic64_xchg( ndrte_atomic64_t *atomic_val, uint64_t xchg_val )
 {
 	register uint64_t ret __asm__( "rax" ) = xchg_val;
-	NDRTE_UOPTR( uint64_t ) ptr = ndrte_uoptr_set(atomic_val->cnt);
 
 	__asm__ __volatile__ ( NDRTE_LOCK_PREFIX "xchgq %0, %1"
-							: "+a" (ret), "+m" (*ptr)
+							: "+a" (ret), "+m" ((atomic_val)->cnt)
 							: : "memory" );
 
 	return ret;
@@ -120,10 +117,9 @@ static NDRTE_STRONG_INLINE uint64_t ndrte_atomic64_xchg( ndrte_atomic64_t *atomi
 static NDRTE_STRONG_INLINE uint64_t ndrte_atomic64_cmpxchg( ndrte_atomic64_t *atomic_val, uint64_t old_val, uint64_t new_val )
 {
 	register uint64_t ret __asm__( "rax" );
-	NDRTE_UOPTR( uint64_t ) ptr = ndrte_uoptr_set(atomic_val->cnt);
 
 	__asm__ __volatile__ ( NDRTE_LOCK_PREFIX "cmpxchgq %2, %1"
-							: "=a" (ret), "+m" (*ptr)
+							: "=a" (ret), "+m" ((atomic_val)->cnt)
 							: "r" (new_val), "a" (old_val)
 							: "memory" );
 	return ret;
@@ -141,7 +137,7 @@ static NDRTE_STRONG_INLINE uint32_t ndrte_atomic32_get( ndrte_atomic32_t *atomic
 
 static NDRTE_STRONG_INLINE void ndrte_atomic32_set( ndrte_atomic32_t *atomic_val, uint32_t mov_val )
 {
-	NDRTE_ACCESS_ONCE( atomic_val->cnt ) = NDRTE_ACCESS_ONCE( mov_val );
+	atomic_val->cnt = mov_val;
 }
 
 static NDRTE_STRONG_INLINE void ndrte_atomic32_add( ndrte_atomic32_t *atomic_val, uint32_t add_val )
@@ -173,10 +169,9 @@ static NDRTE_STRONG_INLINE void ndrte_atomic32_dec( ndrte_atomic32_t *atomic_val
 static NDRTE_STRONG_INLINE uint32_t ndrte_atomic32_xchg( ndrte_atomic32_t *atomic_val, uint32_t xchg_val )
 {
 	register uint32_t ret __asm__( "eax" ) = xchg_val;
-	NDRTE_UOPTR( uint32_t ) ptr = ndrte_uoptr_set(atomic_val->cnt);
 
 	__asm__ __volatile__ ( NDRTE_LOCK_PREFIX "xchgl %0, %1"
-							: "+a" (ret), "+m" (*ptr)
+							: "+a" (ret), "+m" ((atomic_val)->cnt)
 							: : "memory" );
 
 	return ret;
@@ -185,10 +180,9 @@ static NDRTE_STRONG_INLINE uint32_t ndrte_atomic32_xchg( ndrte_atomic32_t *atomi
 static NDRTE_STRONG_INLINE uint32_t ndrte_atomic32_cmpxchg( ndrte_atomic32_t *atomic_val, uint32_t old_val, uint32_t new_val )
 {
 	register uint32_t ret __asm__( "eax" );
-	NDRTE_UOPTR( uint32_t ) ptr = ndrte_uoptr_set(atomic_val->cnt);
 
 	__asm__ __volatile__ ( NDRTE_LOCK_PREFIX "cmpxchgl %2, %1"
-							: "=a" (ret), "+m" (*ptr)
+							: "=a" (ret), "+m" ((atomic_val)->cnt)
 							: "r" (new_val), "a" (old_val)
 							: "memory" );
 	return ret;

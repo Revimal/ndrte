@@ -2,8 +2,6 @@
 #include <string.h>
 #include <errno.h>
 
-#include "ndrte_arch_barrier.h"
-
 #include "ndrte_lfqueue.h"
 
 static NDRTE_STRONG_INLINE uint64_t ndrte_lfq_get_enq_head( struct ndrte_lfq *lfq )
@@ -72,7 +70,7 @@ int ndrte_lfq_init( struct ndrte_lfq *lfq, NDRTE_UNUSED const char *name, uint64
 	return 0;
 }
 
-uint64_t ndrte_lfq_enq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, int mode )
+uint64_t ndrte_lfq_enq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, ndrte_dst_mode_t mode )
 {
 	uint64_t enq_tail, deq_head, local_enq_tail, enq_num, i;
 
@@ -122,7 +120,7 @@ uint64_t ndrte_lfq_enq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t 
 	return enq_num;
 }
 
-uint64_t ndrte_lfq_deq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, int mode )
+uint64_t ndrte_lfq_deq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, ndrte_dst_mode_t mode )
 {
 	uint64_t deq_tail, enq_head, local_deq_tail, deq_num, i;
 
