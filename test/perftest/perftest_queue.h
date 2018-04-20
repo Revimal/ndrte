@@ -3,6 +3,6 @@
 
 #include "perftest_common.h"
 
-NTS_DEFINE_TC( queue_single );
+NTS_DECLARE_TC( queue_single );
 
 #endif

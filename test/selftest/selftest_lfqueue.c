@@ -41,7 +41,7 @@ static void * lfq_sp_sc_deq( void *arg )
 	return NULL;
 }
 
-NTS_DECLARE_TC( lfqueue_single )
+NTS_DEFINE_TC( lfqueue_single )
 {
 	struct ndrte_lfq lfq;
 	uint64_t i;
@@ -61,7 +61,7 @@ NTS_DECLARE_TC( lfqueue_single )
 	}
 }
 
-NTS_DECLARE_TC( lfqueue_sp_sc )
+NTS_DEFINE_TC( lfqueue_sp_sc )
 {
 
 	struct ndrte_lfq lfq;

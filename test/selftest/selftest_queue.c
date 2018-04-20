@@ -4,7 +4,7 @@
 
 #define QUEUE_TEST_SIZE 10000000
 
-NTS_DECLARE_TC( queue_single )
+NTS_DEFINE_TC( queue_single )
 {
 	struct ndrte_queue queue;
 	uint64_t i;
