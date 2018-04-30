@@ -41,22 +41,22 @@ static int __init ngpm1_load( void )
 {
 	int ret = 0;
 
-	ngpm1_skbhook_attach( cpu_to_be16(ETH_P_IP), ngpm1_iphook_callback );
+	ngpm1_skbhook_attach( cpu_to_be16( ETH_P_IP ), ngpm1_iphook_callback );
 
 	return ret;
 }
 
 static void __exit ngpm1_unload( void )
 {
-	ngpm1_skbhook_detach( cpu_to_be16(ETH_P_IP) );
+	ngpm1_skbhook_detach( cpu_to_be16( ETH_P_IP ) );
 
 	return;
 }
 
-module_init(ngpm1_load);
-module_exit(ngpm1_unload);
+module_init( ngpm1_load );
+module_exit( ngpm1_unload );
 
-MODULE_VERSION("1.0.0");
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("openndr");
-MODULE_DESCRIPTION("Linux skbuff user-mapping driver for generic NICs");
+MODULE_VERSION( "1.0.0" );
+MODULE_LICENSE( "GPL" );
+MODULE_AUTHOR( "openndr" );
+MODULE_DESCRIPTION( "Linux skbuff user-mapping driver for generic NICs" );

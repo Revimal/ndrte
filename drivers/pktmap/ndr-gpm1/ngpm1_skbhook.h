@@ -1,6 +1,7 @@
 #ifndef NDR_GPM1_SKBHOOK_H
 #define NDR_GPM1_SKBHOOK_H
 
+#include <linux/types.h>
 #include <linux/netdevice.h>
 
 #define NGPM1_SKBHOOK_ARGS \
