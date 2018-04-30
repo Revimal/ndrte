@@ -33,8 +33,7 @@ static int ngpm1_iphook_callback( NGPM1_SKBHOOK_ARGS )
 		);
 	}
 
-	kfree_skb( skb );
-	return NET_RX_DROP;
+	return ngpm1_skbhook_pktpass( cpu_to_be16( ETH_P_IP), skb, orig_dev );
 }
 
 static int __init ngpm1_load( void )

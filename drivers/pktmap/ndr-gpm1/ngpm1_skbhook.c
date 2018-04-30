@@ -106,7 +106,6 @@ int ngpm1_skbhook_attach( uint16_t type, int (*ptr_hook_func)( NGPM1_SKBHOOK_ARG
 
 	dev_add_pack( &(shdesc->pt) );
 
-
 	while ( !!(pt_iter = ngmp1_ptype_entry_rcu( shdesc->type, &(shdesc->pt.list) )) )
 	{
 		dev_remove_pack( pt_iter );
@@ -120,7 +119,7 @@ int ngpm1_skbhook_attach( uint16_t type, int (*ptr_hook_func)( NGPM1_SKBHOOK_ARG
 	dev_add_pack( &(shdesc->pt) );
 locked_out:
 	spin_unlock( &shdesc_list_lock );
-hook_out:
+out:
 	return !shdesc;
 }
 
@@ -154,4 +153,42 @@ int ngpm1_skbhook_detach( uint16_t type )
 	kfree( shdesc );
 out:
 	return !shdesc;
+}
+
+int ngpm1_skbhook_pktpass( uint16_t type, struct sk_buff *skb, struct net_device *orig_dev )
+{
+	ngpm1_shdesc_t shdesc = NULL;
+	struct packet_type *pt_iter = NULL;
+	int ret = NET_RX_SUCCESS;
+
+	refcount_dec( &(skb->users) );
+
+	rcu_read_lock_bh();
+	shdesc = ngpm1_shdesc_lookup( type );
+	if ( !shdesc )
+	{
+		goto drop;
+	}
+
+	list_for_each_entry_rcu( pt_iter, &(shdesc->ptlist), list )
+	{
+		if ( pt_iter->type == shdesc->type )
+		{
+			if ( unlikely(skb_orphan_frags( skb, GFP_ATOMIC )) )
+			{
+				goto drop;
+			}
+			refcount_inc( &(skb->users) );
+			ret = pt_iter->func( skb, skb->dev, pt_iter, orig_dev );
+		}
+	}
+
+out:
+	rcu_read_unlock_bh();
+	return ret;
+
+drop:
+	kfree_skb( skb );
+	ret = NET_RX_DROP;
+	goto out;
 }
