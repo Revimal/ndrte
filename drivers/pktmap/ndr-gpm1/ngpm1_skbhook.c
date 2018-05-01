@@ -4,6 +4,7 @@
 #include <linux/rculist.h>
 #include <linux/spinlock.h>
 #include <linux/skbuff.h>
+#include <linux/version.h>
 
 #include "drv_common.h"
 #include "ngpm1_skbhook.h"
@@ -73,6 +74,49 @@ static inline struct packet_type * ngmp1_ptype_entry( uint16_t type, struct list
 		return ptype_entry;
 	}
 	return NULL;
+}
+
+static inline int ngpm1_skbhook_deliver_skb( struct sk_buff *skb, struct packet_type *pt, struct net_device *orig_dev )
+{
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0)
+	refcount_dec( &(skb->users) );
+
+	if ( unlikely(skb_orphan_frags_rx( skb, GFP_ATOMIC )) )
+	{
+		return -ENOMEM;
+	}
+
+	refcount_inc( &(skb->users) );
+	return pt->func( skb, skb->dev, pt, orig_dev );
+
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(4,13,0)
+	refcount_dec( &(skb->users) );
+
+	if ( unlikely(skb_orphan_frags( skb, GFP_ATOMIC )) )
+	{
+		return -ENOMEM;
+	}
+
+	refcount_inc( &(skb->users) );
+	return pt->func( skb, skb->dev, pt, orig_dev );
+
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION( 3,6,0 )
+	atomic_dec( &(skb->users) );
+
+	if ( unlikely(skb_orphan_frags( skb, GFP_ATOMIC )) )
+	{
+		return -ENOMEM;
+	}
+	atomic_inc( &(skb->users) );
+	return pt->func( skb, skb->dev, pt, orig_dev );
+
+#else
+	atomic_dec( &(skb->users) );
+
+	atomic_inc( &(skb->users) );
+	return pt->func( skb, skb->dev, pt, orig_dev );
+
+#endif
 }
 
 
@@ -161,8 +205,6 @@ int ngpm1_skbhook_pktpass( uint16_t type, struct sk_buff *skb, struct net_device
 	struct packet_type *pt_iter = NULL;
 	int ret = NET_RX_SUCCESS;
 
-	refcount_dec( &(skb->users) );
-
 	rcu_read_lock_bh();
 	shdesc = ngpm1_shdesc_lookup( type );
 	if ( !shdesc )
@@ -174,12 +216,10 @@ int ngpm1_skbhook_pktpass( uint16_t type, struct sk_buff *skb, struct net_device
 	{
 		if ( pt_iter->type == shdesc->type )
 		{
-			if ( unlikely(skb_orphan_frags( skb, GFP_ATOMIC )) )
+			if ( !!ngpm1_skbhook_deliver_skb( skb, pt_iter, orig_dev ) )
 			{
 				goto drop;
 			}
-			refcount_inc( &(skb->users) );
-			ret = pt_iter->func( skb, skb->dev, pt_iter, orig_dev );
 		}
 	}
 
