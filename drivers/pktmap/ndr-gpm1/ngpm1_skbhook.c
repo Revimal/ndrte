@@ -43,7 +43,7 @@ static inline ngpm1_shdesc_t ngpm1_shdesc_lookup( uint16_t type )
 	return NULL;
 }
 
-static inline struct packet_type * ngmp1_ptype_entry_rcu( uint16_t type, struct list_head *head )
+static inline struct packet_type * ngpm1_ptype_entry_rcu( uint16_t type, struct list_head *head )
 {
 	struct packet_type *ptype_entry = NULL;
 
@@ -61,11 +61,11 @@ static inline struct packet_type * ngmp1_ptype_entry_rcu( uint16_t type, struct 
 	return NULL;
 }
 
-static inline struct packet_type * ngmp1_ptype_entry( uint16_t type, struct list_head *head )
+static inline struct packet_type * ngpm1_ptype_entry( uint16_t type, struct list_head *head )
 {
 	struct packet_type *ptype_entry = NULL;
 
-	list_for_each_entry_rcu( ptype_entry, head, list )
+	list_for_each_entry( ptype_entry, head, list )
 	{
 		if ( ptype_entry->type != type )
 		{
@@ -150,7 +150,7 @@ int ngpm1_skbhook_attach( uint16_t type, int (*ptr_hook_func)( NGPM1_SKBHOOK_ARG
 
 	dev_add_pack( &(shdesc->pt) );
 
-	while ( !!(pt_iter = ngmp1_ptype_entry_rcu( shdesc->type, &(shdesc->pt.list) )) )
+	while ( !!(pt_iter = ngpm1_ptype_entry_rcu( shdesc->type, &(shdesc->pt.list) )) )
 	{
 		dev_remove_pack( pt_iter );
 		list_add_rcu( &(pt_iter->list), &(shdesc->ptlist) );
@@ -183,7 +183,7 @@ int ngpm1_skbhook_detach( uint16_t type )
 	spin_lock( &shdesc_list_lock );
 	rcu_read_unlock();
 
-	while ( !!(pt_iter = ngmp1_ptype_entry( shdesc->type, &(shdesc->ptlist) )) )
+	while ( !!(pt_iter = ngpm1_ptype_entry( shdesc->type, &(shdesc->ptlist) )) )
 	{
 		list_del_rcu( &(pt_iter->list) );
 		dev_add_pack( pt_iter );
