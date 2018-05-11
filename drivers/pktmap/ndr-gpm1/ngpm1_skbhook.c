@@ -100,7 +100,7 @@ static inline int ngpm1_skbhook_deliver_skb( struct sk_buff *skb, struct packet_
 	refcount_inc( &(skb->users) );
 	return pt->func( skb, skb->dev, pt, orig_dev );
 
-#elif LINUX_VERSION_CODE >= KERNEL_VERSION( 3,6,0 )
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(3,6,0)
 	atomic_dec( &(skb->users) );
 
 	if ( unlikely(skb_orphan_frags( skb, GFP_ATOMIC )) )
