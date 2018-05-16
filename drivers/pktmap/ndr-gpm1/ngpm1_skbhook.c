@@ -205,11 +205,12 @@ int ngpm1_skbhook_pktpass( NGPM1_SKBHOOK_ARGS )
 
 	rcu_read_lock();
 
-	shdesc = container_of( pt, struct ngpm1_shdesc_struct, pt );
-	if ( !shdesc )
+	if ( !pt )
 	{
 		goto drop;
 	}
+
+	shdesc = container_of( pt, struct ngpm1_shdesc_struct, pt );
 
 	if ( !shdesc->orig_handler )
 	{
