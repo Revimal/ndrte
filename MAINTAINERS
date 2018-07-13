@@ -19,7 +19,7 @@ Descriptions of section entries:
 		F:	*/arch/*      all files in "any top level directory"/arch
 		One pattern per line.  Multiple F: lines acceptable.
 	X: Files and directories exclusion, same rules as F:
-	K: Keyword regex pattern to match content.
+	K: Keyword regex pattern to match the content.
 		One regex pattern per line. Multiple K: lines acceptable.
 
 Stable Branch
@@ -44,7 +44,6 @@ M:	Hyeonho Seo <seohho@gmail.com>
 C:	comp
 S:	Broken
 F:	compdeps/*
-X:	compdeps/gcc/
 
 gcc Support
 M:	Hyeonho Seo <seohho@gmail.com>
@@ -58,7 +57,6 @@ M:	Hyeonho Seo <seohho@gmail.com>
 C:	arch
 S:	Broken
 F:	archdeps/*
-X:	archdeps/x86_64/
 
 x86 Support
 M:	Hyeonho Seo <seohho@gmail.com>
@@ -71,7 +69,6 @@ M:	Hyeonho Seo <seohho@gmail.com>
 C:	drv
 S:	Maintained
 F:	drivers/*
-X:	drivers/pktmap/
 
 == Linux Pktmap Driver ==
 Linux Pktmap Driver Commons
@@ -79,13 +76,25 @@ M:	Hyeonho Seo <seohho@gmail.com>
 C:	pmap
 S:	Maintained
 F:	drivers/pktmap/*
-X:	drivers/pktmap/ndr-gpm1
 
 NDR-GPM1 Pktmap Driver
 M:	Hyeonho Seo <seohho@gmail.com>
 C:	pmap/ndr-gpm1
 S:	Maintained
-F:	drivers/ndr-gpm1/
+F:	drivers/pktmap/ndr-gpm1/
+
+== Linux User-DMA Driver ==
+Linux User-DMA Driver Commons
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	udma
+S:	Maintained
+F:	drivers/userdma/*
+
+NDR-IXGBE UDMA Driver
+M:	Hyeonho Seo <seohho@gmail.com>
+C:	udma/nixgbe
+S:	Maintained
+F:	drivers/userdma/nixgbe/
 
 == Data Structure ==
 Data Structure Commons
@@ -93,8 +102,6 @@ M:	Hyeonho Seo <seohho@gmail.com>
 C:	dst
 S:	Broken
 F:	datastructs/*
-X:	datastructs/single/
-X:	datastructs/lockfree/
 
 Normal Structure
 M:	Hyeonho Seo <seohho@gmail.com>

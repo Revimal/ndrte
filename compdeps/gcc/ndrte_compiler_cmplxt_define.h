@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #ifdef NDRTE_COMPILER_COMMON_H
 
 #define NDRTE_CMPLXT_COMMON_TCHK_1( ctype, arg, ... ) \
@@ -49,9 +56,6 @@
 	NDRTE_CMPLXT_COMMON_TCHK_15( ctype, __VA_ARGS__ )
 #define NDRTE_CMPLXT_COMMON_TCHK_( N, ctype, arg, ... ) NDRTE_PP_CAT( NDRTE_CMPLXT_COMMON_TCHK_, N ) ( ctype, arg, __VA_ARGS__ )
 #define NDRTE_CMPLXT_COMMON_TCHK( ctype, arg, ... ) NDRTE_CMPLXT_COMMON_TCHK_( NDRTE_PP_NARG( arg, __VA_ARGS__), ctype, arg, __VA_ARGS__ )
-
-typedef int ndrte_int64_t __attribute__((__mode__(__DI__)));
-typedef unsigned int ndrte_uint64_t __attribute__((__mode__(__DI__))) ;
 
 typedef int ndrte_int128_t __attribute__((__mode__(__TI__))) ;
 typedef unsigned int ndrte_uint128_t __attribute__((__mode__(__TI__))) ;

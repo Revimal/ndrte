@@ -1,0 +1,56 @@
+/*******************************************************************************
+
+  Intel(R) 10GbE PCI Express Linux Network Driver
+  Copyright(c) 1999 - 2018 Intel Corporation.
+
+  This program is free software; you can redistribute it and/or modify it
+  under the terms and conditions of the GNU General Public License,
+  version 2, as published by the Free Software Foundation.
+
+  This program is distributed in the hope it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+  more details.
+
+  The full GNU General Public License is included in this distribution in
+  the file called "COPYING".
+
+  Contact Information:
+  Linux NICS <linux.nics@intel.com>
+  e1000-devel Mailing List <e1000-devel@lists.sourceforge.net>
+  Intel Corporation, 5200 N.E. Elam Young Parkway, Hillsboro, OR 97124-6497
+
+*******************************************************************************/
+
+/******************************************************************************
+ Copyright (c)2006 - 2007 Myricom, Inc. for some LRO specific code
+******************************************************************************/
+
+/******************************************************************************
+
+ NDR User-DMA driver for Intel(R) 10GbE PCIe NICs
+ Copyright (C) 2018 NDR Opensource Group
+
+ See 'License' in the project root for legal information.
+
+ * Customized Makefile
+   - Makefile
+
+ * Customized Kernel-compats
+   - nixgbe_kcompat.c
+   - nixgbe_kcompat.h
+
+ * Customized Core-module
+   - nixgbe_define.h
+   - nixgbe_pdev.c
+   - nixgbe_pdev.h
+   - nixgbe_main.c
+
+ * User-DMA Feature
+   - ixgbe_udma.c
+   - ixgbe_udma.h
+
+ Contact Information:
+ NDR Opensource Group <openndr@googlegroups.com>
+
+******************************************************************************/

@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #ifndef NDRTE_QUEUE_H
 #define NDRTE_QUEUE_H
 
@@ -15,6 +22,7 @@ struct ndrte_queue
 } NDRTE_ALIGN( NDRTE_ARCH_CACHELINE );
 
 int ndrte_queue_init( struct ndrte_queue *queue, NDRTE_UNUSED const char *name, uint64_t queue_sz );
+void ndrte_queue_cleanup( struct ndrte_queue *queue );
 
 uint64_t ndrte_queue_free_count( struct ndrte_queue *queue );
 uint64_t ndrte_queue_fill_count( struct ndrte_queue *queue );

@@ -8,7 +8,7 @@ It runs mostly in linux userland; process task scheduling and memory mapping aut
 
 *It's inspired by [Intel® Data Plane Development Kit](http://dpdk.org/)*
 
-[![License: MIT (API codes)](https://img.shields.io/badge/License-MPL--2.0-green.svg)](https://opensource.org/licenses/MPL-2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![License: GPL-3.0 (Linux kernel modules)](https://img.shields.io/badge/License-GPL--3.0-green.svg)](https://opensource.org/licenses/GPL-3.0)
 [![Release: 1.0.0-rc1](https://img.shields.io/badge/release-v1.0.0--rc1-blue.svg)](https://github.com/openndr/ndrte/releases/tag/v1.0.0-rc1)
 [![Build Status](https://travis-ci.org/openndr/ndrte.svg?branch=master)](https://travis-ci.org/openndr/ndrte)
@@ -23,11 +23,11 @@ It runs mostly in linux userland; process task scheduling and memory mapping aut
 
 ## Features
 ### Light-weight context switching scheduler
-* Coroutine like light-weight work unit
+* Coroutine like light-weight work unit [indev]
 
 ### Packet user-space mapping drivers
-* SW-implemented Flow Director
-* 1-copy skbuff user-mapping (for generic drivers)
+* 1-copy skbuff user-mapping (for generic drivers) [indev]
+* 0-copy skbuff user-mapping (for ixgbe) [indev]
 
 ## Documentation
 Reference [here](https://github.com/openndr/ndrte/wiki)

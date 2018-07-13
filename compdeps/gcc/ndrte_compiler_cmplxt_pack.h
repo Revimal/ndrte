@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #ifdef NDRTE_COMPILER_COMMON_H
 
 #define NDRTE_CMPLXT_PACK_ASSIGN_1( tvar, csize, arg, ... ) \
@@ -82,13 +89,13 @@
 #define ndrte_cmplxt_pack_signed_safe( tvar, csize, ... ) \
 	{ \
 		tvar = 0; \
-		NDRTE_CMPLXT_COMMON_TCHK( NDRTE_PP_CAT(NDRTE_PP_CAT( int, csize ), _t ), __VA_ARGS__ ); \
+		NDRTE_CMPLXT_COMMON_TCHK( NDRTE_PP_CAT( NDRTE_PP_CAT( int, csize ), _t ), __VA_ARGS__ ); \
 		ndrte_cmplxt_pack_generic( tvar, csize, __VA_ARGS__ ); \
 	}
 #define ndrte_cmplxt_pack_unsigned_safe( tvar, csize, ... ) \
 	{ \
 		tvar = 0; \
-		NDRTE_CMPLXT_COMMON_TCHK( NDRTE_PP_CAT(NDRTE_PP_CAT( uint, csize ), _t ), __VA_ARGS__ ); \
+		NDRTE_CMPLXT_COMMON_TCHK( NDRTE_PP_CAT( NDRTE_PP_CAT( uint, csize ), _t ), __VA_ARGS__ ); \
 		ndrte_cmplxt_pack_generic( tvar, csize, __VA_ARGS__ ); \
 	}
 

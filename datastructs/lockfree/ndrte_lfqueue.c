@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -58,7 +65,7 @@ int ndrte_lfq_init( struct ndrte_lfq *lfq, NDRTE_UNUSED const char *name, uint64
 
 	memset( lfq, 0, sizeof(*lfq) );
 
-	lfq->data = malloc( lfq_sz * sizeof(void *) );
+	lfq->data = ndrte_dst_alloc( lfq_sz * sizeof(void *) );
 	if ( !lfq->data )
 	{
 		return -ENOMEM;
@@ -68,6 +75,16 @@ int ndrte_lfq_init( struct ndrte_lfq *lfq, NDRTE_UNUSED const char *name, uint64
 	lfq->lfq_sz = lfq_sz;
 
 	return 0;
+}
+
+void ndrte_lfq_cleanup( struct ndrte_lfq *lfq )
+{
+	if ( lfq && !ndrte_lfq_fill_count( lfq ) )
+	{
+		ndrte_dst_free( lfq );
+	}
+
+	return;
 }
 
 uint64_t ndrte_lfq_enq_generic( struct ndrte_lfq *lfq, void **obj_arr, uint64_t num, ndrte_dst_mode_t mode )

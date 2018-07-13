@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #ifndef NDRTE_COMPILER_COMMON_H
 #define NDRTE_COMPILER_COMMON_H
 
@@ -10,7 +17,7 @@
 #define NDRTE_UNUSED __attribute__((unused))
 #define NDRTE_STRONG_INLINE inline __attribute__((always_inline))
 #define NDRTE_ALIGN( value ) __attribute__((aligned(value)))
-#define NDRTE_PACKED() __atrribute__((packed))
+#define NDRTE_PACKED __attribute__((packed))
 
 #define ndrte_builtin_const( x ) __builtin_constant_p( x )
 #define ndrte_likely( x ) __builtin_expect( (x), 1 )

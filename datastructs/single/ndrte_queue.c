@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -28,7 +35,7 @@ int ndrte_queue_init( struct ndrte_queue *queue, NDRTE_UNUSED const char *name, 
 
 	memset( queue, 0, sizeof(*queue) );
 
-	queue->data = malloc( queue_sz * sizeof(void *) );
+	queue->data = ndrte_dst_alloc( queue_sz * sizeof(void *) );
 	if ( !queue->data )
 	{
 		return -ENOMEM;
@@ -38,6 +45,16 @@ int ndrte_queue_init( struct ndrte_queue *queue, NDRTE_UNUSED const char *name, 
 	queue->queue_sz = queue_sz;
 
 	return 0;
+}
+
+void ndrte_queue_cleanup( struct ndrte_queue *queue )
+{
+	if ( queue && !ndrte_queue_fill_count( queue ) )
+	{
+		ndrte_dst_free( queue );
+	}
+
+	return;
 }
 
 uint64_t ndrte_queue_enq_generic( struct ndrte_queue *queue, void **obj_arr, uint64_t num, ndrte_dst_mode_t mode )

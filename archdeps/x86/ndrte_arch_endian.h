@@ -1,3 +1,10 @@
+/******************************************************************************
+ Copyright (C) 2018 NDR Opensource Group
+
+ Licensed under the several legal conditions.
+ See 'License' in the project root for legal information.
+******************************************************************************/
+
 #ifndef NDRTE_ARCH_ENDIAN_H
 #define NDRTE_ARCH_ENDIAN_H
 
