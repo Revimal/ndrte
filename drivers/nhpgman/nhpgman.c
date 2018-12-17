@@ -22,7 +22,6 @@ MODULE_DESCRIPTION(NHPGMAN_MODULE_DESC);
 
 struct nhpg_desc {
 	unsigned int hugepg_order;
-	unsigned long hugepg_size;
 	struct page *hugepg_ptr;
 
 	struct list_head list;
@@ -39,15 +38,10 @@ struct nhpg_info {
 
 	struct ndrte_lfq hugepg_eden_pool[MAX_NUMNODES][MAX_ORDER - 1];
 
-	struct list_head hugepg_surv_list[MAX_NUMNODES][NHPGMAN_HASH_ORDER];
-	spinlock_t hugepg_hashlock[MAX_NUMNODES][NHPGMAN_HASH_ORDER];
+	struct list_head hugepg_surv_list[MAX_NUMNODES][MAX_ORDER - 1];
+	spinlock_t hugepg_hashlock[MAX_NUMNODES][MAX_ORDER - 1];
 }
 static nhpg_info nhpg_global_info;
-
-struct page *nhpg_hugepg_resolv(const char *name)
-{
-
-}
 
 static void nhpg_hugepg_free(struct page *page)
 {
@@ -58,24 +52,11 @@ static void nhpg_hugepg_free(struct page *page)
 
 }
 
-struct page *nhpg_hugepg_alloc(const char *name, int numa_node, unsigned long size, nhpg_gfp_t nhpg_gfp)
+static struct page *nhpg_hugepg_prep(int numa_node, int order, bool rt_alloc)
 {
 	struct page *hugepg = NULL;
-	int order = get_order(size);
-	gfp_t gfp_flag;
-
-	switch (nhpg_gfp) {
-	case NHPG_DEV:
-		gfp_flag = NHPGMAN_GFP_FLAG_DEVICE;
-		break;
-	case NHPG_IRQ:
-		gfp_flag = NHPGMAN_GFP_FLAG_ATOMIC;
-		break;
-	case NHPG_NORM:
-	default:
-		gfp_flag = NHPGMAN_GFP_FLAG_NORMAL;
-		break;
-	}
+	gfp_t gfp_flag =
+		!!rt_alloc ? NHPGMAN_GFP_FLAG_RTALLOC : NHPGMAN_GFP_FLAG_PREALLOC;
 
 	if (numa_node == NUMA_NO_NODE)
 		hugepg = alloc_pages(gfp_flag, order);
@@ -91,38 +72,49 @@ struct page *nhpg_hugepg_alloc(const char *name, int numa_node, unsigned long si
 	return hugepg;
 }
 
+struct page *nhpg_hugepg_alloc(const char *name, int numa_node, unsigned long size)
+{
+	struct page *hugepg = NULL;
+	int order = get_order(size);
+
+	return hugepg;
+}
+
 static int __init nhpg_load(void)
 {
-	int i, j, ret = 0;
+	int numa_id, ret = 0;
 
-	for ( i = 0; i < MAX_NUMNODES; i++ ) {
-		if (ndrte_lfq_init(&nhpg_global_info->hugepg_eden_pool[i],
-				NULL, NHPGMAN_DEFSET_EDENSZ)) {
-			pr_err("failed to init hugepg eden pool (%d)\n", i);
+	for (numa_id = 0; numa_id < MAX_NUMNODES; numa_id++) {
+		ret = ndrte_lfq_init(&nhpg_global_info->hugepg_eden_pool[numa_id], NULL, NHPGMAN_DEFSET_EDENSZ);
+		if (ret) {
+			pr_err("failed to init hugepg eden pool (%d)\n", numa_id);
 			goto err_out_reclaim_eden_pool;
 		}
 
+		for (pg_order = 0; pg_order < MAX_ORDER - 1; pg_order++)
 	}
 
 err_out:
 	return ret;
 
 err_out_reclaim_eden_pool:
-	for ( i; i > 0; ) {
-		struct ndrte_lfq *reclaim_lfq = &nhpg_global_info->hugepg_eden_pool[--i];
+	for (numa_id; numa_id > 0;) {
+		struct ndrte_lfq *reclaim_lfq = &nhpg_global_info->hugepg_eden_pool[--numa_id];
 		uint64_t pg_cnt = ndrte_lfq_fill_count(reclaim_lfq);
 
-		for ( pg_cnt; pg_cnt > 0; pg_cnt = ndrte_lfq_fill_count(reclaim_lfq) ) {
+		for (pg_cnt; pg_cnt > 0; pg_cnt = ndrte_lfq_fill_count(reclaim_lfq)) {
 			void *reclaim_pages[pg_cnt];
 			uint64_t reclaim_pg_cnt = ndrte_lfq_deq(reclaim_lfq, reclaim_pages, pg_cnt);
 
-			for ( reclaim_pg_cnt; reclaim_pg_cnt > 0; ) {
+			for (reclaim_pg_cnt; reclaim_pg_cnt > 0;) {
 				__free_pages((struct page *)reclaim_pages[--reclaim_idx],
 					nhpg_global_info->hugepg_order);
 			}
 		}
 		ndrte_lfq_cleanup(reclaim_lfq);
 	}
+
+	goto err_out;
 }
 
 static void __exit nhpg_unload(void)

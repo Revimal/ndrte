@@ -13,15 +13,7 @@
 #include "ndrte_arch_atomic.h"
 #include "drv_common.h"
 
-#define NHPGMAN_GFP_FLAG_DEVICE (GFP_ATOMIC | __GFP_COLD | __GFP_COMP | __GFP_NORETRY | __GFP_NOWARN)
-#define NHPGMAN_GFP_FLAG_ATOMIC (GFP_ATOMIC | __GFP_COMP | __GFP_NORETRY | __GFP_NOWARN)
-#define NHPGMAN_GFP_FLAG_NORMAL (GFP_KERNEL | __GFP_COMP | __GFP_NORETRY | __GFP_NOWARN)
-
-enum nhpg_gfp_type {
-	NHPG_DEV,
-	NHPG_IRQ,
-	NHPG_NORM,
-};
-typedef nhpg_gfp_type nhpg_gfp_t;
+#define NHPGMAN_GFP_FLAG_PREALLOC (GFP_ATOMIC | __GFP_COLD | __GFP_COMP | __GFP_NORETRY | __GFP_NOWARN)
+#define NHPGMAN_GFP_FLAG_RTALLOC (GFP_ATOMIC | __GFP_COLD | __GFP_COMP | __GFP_NORETRY | __GFP_NOWARN)
 
 #endif
